@@ -11,13 +11,14 @@ agent skills. It is **not** an application or library project.
 
 ```
 .
-├── .agents/skills/   # all skills live here (tracked)
+├── .agents/skills/   # project skills (tracked)
+├── global-skills/    # user-global skills (tracked)
 ├── AGENTS.md         # this file (tracked)
 └── .gitignore        # whitelist-only ignore rules (tracked)
 ```
 
-Everything else is git-ignored. Only `.agents/skills/`, `AGENTS.md`, and
-`.gitignore` are tracked.
+Everything else is git-ignored. Only `.agents/skills/`, `global-skills/`,
+`AGENTS.md`, and `.gitignore` are tracked.
 
 ## Skill conventions
 

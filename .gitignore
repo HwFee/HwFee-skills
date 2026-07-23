@@ -1,9 +1,11 @@
 # Ignore everything by default
 *
 
-# Track only skills, AGENTS.md, and this .gitignore
+# Track only skills, global-skills, AGENTS.md, and this .gitignore
 !.gitignore
 !AGENTS.md
 !.agents/
 !.agents/skills/
 !.agents/skills/**
+!global-skills/
+!global-skills/**

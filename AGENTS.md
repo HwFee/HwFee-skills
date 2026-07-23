@@ -37,8 +37,28 @@ generated during testing go in that directory.
 Test directories are automatically git-ignored by the whitelist `.gitignore` —
 no cleanup needed before committing.
 
+## Skills inventory
+
+Track each skill's origin so it can be updated from upstream later.
+
+| Skill | Origin type | Source | Latest verified |
+|---|---|---|---|
+| **agently-mail** | npm package wrapper | `@tencent-qqmail/agently-cli`; skill via `npx skills add https://agent.qq.com --skill -g -y` | — |
+| **find-skills** | skills.sh ecosystem | `vercel-labs/skills@find-skills` | 2026-07-23 |
+| **gc-minimal-zine-poster** | GitHub | `LiamGvchi/gc-minimal-zine-poster` | 2026-07-23 |
+| **grill-me** | local | — | — |
+| **image2-gen** | local | — | — |
+| **kami** | GitHub (plugin) | `tw93/Kami` → `plugins/kami/skills/kami/` | 2026-07-23 (v1.10.0) |
+| **lieflat-charts** | local | — | — |
+| **writing-great-skills** | local | — | — |
+
+### Update check
+
+Skills with a `Source` can be updated by re-fetching from that source. Update before promoting to other projects. Run `npx skills update` first; for manually-copied skills, clone the source repo and compare.
+
 ## Working with this repo
 
 - To permanently track a new skill, place it under `.agents/skills/` and commit.
+- **When adding a new skill, record its origin in the Skills inventory table above** — if it came from an external source (GitHub, npm, skills.sh), note the URL; if it's local/custom, mark it as `local`.
 - Do not commit test output, generated examples, or data files unless they
   belong inside a skill directory.

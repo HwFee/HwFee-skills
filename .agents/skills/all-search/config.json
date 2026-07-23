@@ -1,0 +1,12 @@
+{
+  "apiKeys": {
+    "exa": "262c6932-6db2-4c3f-b407-f53ff93e60bb",
+    "tavily": "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",
+    "anysearch": "as_sk_cfefdc721c38817dcb42171d57ba1fab",
+    "firecrawl": "fc-8080c65809ef42489560203707a74326",
+    "context7": "ctx7sk-6ce23520-cf5a-46ae-a52c-128617303b73"
+  },
+  "provider": "auto",
+  "cacheTtlMs": 300000,
+  "maxResults": 5
+}

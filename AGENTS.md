@@ -1,64 +1,67 @@
 # HwFee Skills
 
-A skills repository for testing and experimenting with newly installed agent skills.
+Central skills repository — the single source of truth for all agent skills. Other
+projects and the user-global skills directory junction from here, never copy.
 
-## What this repo is
-
-This repo exists solely as a workspace for installing, testing, and iterating on
-agent skills. It is **not** an application or library project.
-
-## Layout
+## Architecture
 
 ```
-.
-├── .agents/skills/   # project skills (tracked)
-├── global-skills/    # user-global skills (tracked)
-├── AGENTS.md         # this file (tracked)
-└── .gitignore        # whitelist-only ignore rules (tracked)
+HwFee-skills/
+├── global-skills/       # user-global skills (real, tracked)
+├── .agents/skills/      # project skills (real, tracked, NOT a junction)
+├── AGENTS.md
+└── .gitignore
 ```
 
-Everything else is git-ignored. Only `.agents/skills/`, `global-skills/`,
-`AGENTS.md`, and `.gitignore` are tracked.
+| Tier | Entity location | Junction target | Scope |
+|------|----------------|-----------------|-------|
+| Global | `global-skills/<skill>/` | `~/.kimi-code/skills/<skill>/` | All sessions |
+| Project | `.agents/skills/<skill>/` | `<project>/.agents/skills/<skill>/` | Per project |
 
-## Skill conventions
-
-- Skills are stored under `.agents/skills/<skill-name>/`.
 - Each skill has a `SKILL.md` at its root.
-- Install new skills via `npx skills` or by copying a skill directory into
-  `.agents/skills/`.
-- After installing, test the skill in this repo before promoting it elsewhere.
+- `~/.kimi-code/skills/` contains only junctions back to `global-skills/`.
+- This repo's `.agents/skills/` is a real directory so skills can be tested directly.
+- Install, distribute, and remove skills via the **`install-skills`** skill (`/install-skills`).
+- Update skills with upstream via `npx skills update` (skills.sh) or re-clone (GitHub).
+- Do not commit test output or generated code. Media files from testing live in `*-test/` (auto-ignored).
 
 ## Testing skills
 
-To test a skill, create a scratch directory at the repo root named after the
-skill with a `-test` suffix, e.g. `kami-test` or `image2-gen-test`. Any files
-generated during testing go in that directory.
-
-Test directories are automatically git-ignored by the whitelist `.gitignore` —
-no cleanup needed before committing.
+Create a scratch directory at the repo root named after the skill with a `-test` suffix,
+e.g. `kami-test`. Test directories are auto-ignored.
 
 ## Skills inventory
 
-Track each skill's origin so it can be updated from upstream later.
+Track origin so skills can be updated from upstream.
+
+### Global skills (`global-skills/`)
+
+| Skill | Origin type | Source | Latest verified |
+|---|---|---|---|
+| **all-search** | skills.sh ecosystem | `vercel-labs/skills@all-search` | 2026-07-23 |
+| **boot** | local | — | — |
+| **install-skills** | local | — | 2026-07-24 |
+
+### Project skills (`.agents/skills/`)
 
 | Skill | Origin type | Source | Latest verified |
 |---|---|---|---|
 | **agently-mail** | npm package wrapper | `@tencent-qqmail/agently-cli`; skill via `npx skills add https://agent.qq.com --skill -g -y` | — |
+| **bundle-size-optimization** | skills.sh ecosystem | `vercel-labs/skills@bundle-size-optimization` | 2026-07-24 |
+| **deploy-to-vercel** | skills.sh ecosystem | `vercel-labs/skills@deploy-to-vercel` | 2026-07-24 |
 | **find-skills** | skills.sh ecosystem | `vercel-labs/skills@find-skills` | 2026-07-23 |
+| **framer-motion-animator** | skills.sh ecosystem | `vercel-labs/skills@framer-motion-animator` | 2026-07-24 |
+| **frontend-design** | skills.sh ecosystem | `vercel-labs/skills@frontend-design` | 2026-07-24 |
 | **gc-minimal-zine-poster** | GitHub | `LiamGvchi/gc-minimal-zine-poster` | 2026-07-23 |
 | **grill-me** | local | — | — |
+| **ian-xiaohei-illustrations** | GitHub | `helloianneo/ian-xiaohei-illustrations` | 2026-07-23 |
 | **image2-gen** | local | — | — |
 | **kami** | GitHub (plugin) | `tw93/Kami` → `plugins/kami/skills/kami/` | 2026-07-23 (v1.10.0) |
 | **lieflat-charts** | local | — | — |
+| **react-performance-optimization** | skills.sh ecosystem | `vercel-labs/skills@react-performance-optimization` | 2026-07-24 |
+| **signal-geometry** | GitHub | `CaliCastle/skills` | 2026-07-24 |
+| **tailwind-css-patterns** | skills.sh ecosystem | `vercel-labs/skills@tailwind-css-patterns` | 2026-07-24 |
+| **vercel-react-best-practices** | skills.sh ecosystem | `vercel-labs/skills@vercel-react-best-practices` | 2026-07-24 |
+| **vercel-react-view-transitions** | skills.sh ecosystem | `vercel-labs/skills@vercel-react-view-transitions` | 2026-07-24 |
+| **web-design-guidelines** | skills.sh ecosystem | `vercel-labs/skills@web-design-guidelines` | 2026-07-24 |
 | **writing-great-skills** | local | — | — |
-
-### Update check
-
-Skills with a `Source` can be updated by re-fetching from that source. Update before promoting to other projects. Run `npx skills update` first; for manually-copied skills, clone the source repo and compare.
-
-## Working with this repo
-
-- To permanently track a new skill, place it under `.agents/skills/` and commit.
-- **When adding a new skill, record its origin in the Skills inventory table above** — if it came from an external source (GitHub, npm, skills.sh), note the URL; if it's local/custom, mark it as `local`.
-- Do not commit test output, generated examples, or data files unless they
-  belong inside a skill directory.

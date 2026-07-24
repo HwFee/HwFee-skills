@@ -12,19 +12,19 @@ Generate images through the 65535.space image2 API. The tight path is: call the 
 ## Steps
 
 1. Run the script by absolute path.
-   Completion criterion: 命令使用 `C:\Users\17445\GitHub\HwFee-skills\skills\image2-gen\generate.ps1`（全局技能仓库内的脚本，项目通过符号链接引用），不是 workspace-relative 路径。
+   Completion criterion: 命令使用 `C:\Users\17445\Desktop\HwFee-skills\.agents\skills\image2-gen\generate.ps1`（项目 `.agents/skills/` 下），不是 workspace-relative 路径。
 2. Report the saved file.
    Completion criterion: 图片存在于 `-Output` 路径；失败则报上游 `error_code` / `error_message` 或超时。
 
 ## 调用
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\Users\17445\GitHub\HwFee-skills\skills\image2-gen\generate.ps1" -Prompt "a red apple on white table" -Output "./out.png"
+powershell -ExecutionPolicy Bypass -File "C:\Users\17445\Desktop\HwFee-skills\.agents\skills\image2-gen\generate.ps1" -Prompt "a red apple on white table" -Output "C:\Users\17445\Desktop\HwFee-skills\out.png"
 ```
 
 参数：
 - `-Prompt`（必填）提示词
-- `-Output` 输出路径（默认 `./image2-output.png`）
+- `-Output` 输出路径（**必须用绝对路径**，相对路径会解析到脚本所在目录而非项目根目录；默认 `./image2-output.png`）
 - `-Size` 尺寸（默认 `1024x1024`，1K 档最便宜）
 - `-Endpoint` / `-ApiKey`（默认读 `config.json`，不要在命令行传 key）
 

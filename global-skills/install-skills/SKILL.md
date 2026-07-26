@@ -8,7 +8,7 @@ All skill entities live here; every other location is a junction.
 
 | Tier | Entity location | Junction target |
 |------|----------------|-----------------|
-| Global | `$REPO/global-skills/<skill>/` | `~/.kimi-code/skills/<skill>/` |
+| Global | `$REPO/global-skills/<skill>/` | `~/.agents/skills/<skill>/` |
 | Project | `$REPO/.agents/skills/<skill>/` | `<project>/.agents/skills/<skill>/` |
 
 **Windows rule**: `cmd //c "mklink /J …"`, never `ln -s` (copies directories on Windows).
@@ -42,7 +42,7 @@ npx lands at `.agents/skills/<name>/` in `pwd`. GitHub lands at your temp path. 
 
 ```bash
 mv <src> $REPO/global-skills/<skill>/
-cmd //c "mklink /J C:\\Users\\17445\\.kimi-code\\skills\\<skill> C:\\Users\\17445\\Desktop\\HwFee-skills\\global-skills\\<skill>"
+cmd //c "mklink /J C:\\Users\\17445\\.agents\\skills\\<skill> C:\\Users\\17445\\Desktop\\HwFee-skills\\global-skills\\<skill>"
 ```
 
 **Project:**
@@ -67,7 +67,7 @@ Add a row to the inventory table in `$REPO/AGENTS.md`:
 
 Origin types: `skills.sh ecosystem`, `GitHub`, `GitHub (plugin)`, `npm package wrapper`, or `local`. Source formats match existing rows in the table.
 
-**For global skills**, also add the skill name to the installed list in `~/.kimi-code/AGENTS.md`:
+**For global skills**, also add the skill name to the installed list in `~/.agents/AGENTS.md`:
 
 ```
 已安装的全局技能：`boot`（元技能）、`all-search`（多引擎搜索）、`install-skills`（技能安装管理）、`<skill>`（<简述>）。
@@ -99,11 +99,11 @@ cmd //c "mklink /J .agents\\skills\\<skill> C:\\Users\\17445\\Desktop\\HwFee-ski
 ### Global
 
 ```bash
-cmd //c "rmdir C:\\Users\\17445\\.kimi-code\\skills\\<skill>"
+cmd //c "rmdir C:\\Users\\17445\\.agents\\skills\\<skill>"
 rm -rf $REPO/global-skills/<skill>
 ```
 
-Remove its row from `$REPO/AGENTS.md` and its entry from the installed list in `~/.kimi-code/AGENTS.md`.
+Remove its row from `$REPO/AGENTS.md` and its entry from the installed list in `~/.agents/AGENTS.md`.
 
 ### Project
 

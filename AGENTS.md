@@ -15,11 +15,12 @@ HwFee-skills/
 
 | Tier | Entity location | Junction target | Scope |
 |------|----------------|-----------------|-------|
-| Global | `global-skills/<skill>/` | `~/.kimi-code/skills/<skill>/` | All sessions |
+| Global | `global-skills/<skill>/` | `~/.agents/skills/<skill>/` | All sessions |
 | Project | `.agents/skills/<skill>/` | `<project>/.agents/skills/<skill>/` | Per project |
 
 - Each skill has a `SKILL.md` at its root.
-- `~/.kimi-code/skills/` contains only junctions back to `global-skills/`.
+- `~/.agents/skills/` contains only junctions back to `global-skills/` (cross-tool user scope; `~/.kimi-code/skills/` is no longer used).
+- The user-global instruction file lives at `~/.agents/AGENTS.md`.
 - This repo's `.agents/skills/` is a real directory so skills can be tested directly.
 - Install, distribute, and remove skills via the **`install-skills`** skill (`/install-skills`).
 - Update skills with upstream via `npx skills update` (skills.sh) or re-clone (GitHub).

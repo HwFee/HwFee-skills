@@ -72,5 +72,6 @@ powershell -ExecutionPolicy Bypass -File "C:\Users\17445\Desktop\HwFee-skills\.a
 
 ## 注意
 
+- Prompt 支持中文等非 ASCII 字符：脚本已强制 UTF-8 发送（`[Text.Encoding]::UTF8.GetBytes`）。此前 PS 5.1 默认按 Latin-1 发字符串 body，含 `—` `·` 中文等会直接触发服务端 `500 internal error`(2026-07-25 踩坑）。
 - gpt-image-2 在用户账户的「输出尺寸对齐请求」开关未开时，可能返回尺寸不匹配请求的图。这是账户级设置，skill 无法控制；如发现尺寸偏差，提醒用户去个人资料打开该开关。
 - 调用脚本会输出 `cost_usd` 和 `tier`，便于核对计费。

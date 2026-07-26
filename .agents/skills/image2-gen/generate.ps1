@@ -39,13 +39,16 @@ $body = @{
 } | ConvertTo-Json -Compress
 
 Write-Host "[image2] POST $Endpoint/v1/images/generations (X-Async-Mode, model=$Model, size=$Size)"
+# PS 5.1 sends string bodies as Latin-1; non-ASCII prompts get corrupted and the
+# server replies 500 internal error. Force UTF-8 bytes explicitly.
+$bodyBytes = [System.Text.Encoding]::UTF8.GetBytes($body)
 $submitResp = Invoke-RestMethod -Method Post -Uri "$Endpoint/v1/images/generations" `
     -Headers @{
         "Authorization" = "Bearer $ApiKey"
         "X-Async-Mode"  = "true"
-        "Content-Type"  = "application/json"
+        "Content-Type"  = "application/json; charset=utf-8"
     } `
-    -Body $body -TimeoutSec 30
+    -Body $bodyBytes -TimeoutSec 30
 
 $jobId = $submitResp.job_id
 if (-not $jobId) {

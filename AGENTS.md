@@ -87,6 +87,19 @@ tracked by the skills CLI (all show "Source: local"). Update manually by origin 
 - **all-search + firecrawl** is effective for finding GitHub repos by skill content -
   search unique phrases from SKILL.md to locate the original repo.
 
+### Pitfalls (learned 2026-08-07, creating junctions from Git Bash)
+
+- **`cmd //c "mklink /J <link> <target>"` must be ONE quoted string** — separate arguments
+  let MSYS2 path conversion mangle `/J` into a path → `Invalid switch`.
+- **Backslash directly before `$` kills variable expansion** (`".agents\\skills\\$s"` →
+  literal `$s`, creates junk `skills$s` junctions). Build paths with forward slashes,
+  convert with `cygpath -w` into variables, then interpolate the variables.
+- **`mklink /J` never checks the target exists** — verify every junction afterwards with
+  `ls <link>/SKILL.md`.
+- **Add `.agents/` to the target project's `.gitignore`** immediately — git enumerates
+  junction contents as real files.
+- Full pattern documented in `global-skills/install-skills/SKILL.md`.
+
 ## Testing skills
 
 Create a scratch directory at the repo root named after the skill with a `-test` suffix,
@@ -103,28 +116,44 @@ Track origin so skills can be updated from upstream.
 | **all-search** | local | - | 2026-07-29 |
 | **boot** | local | - | - |
 | **install-skills** | local | - | 2026-07-29 |
+| **image-understanding** | local | - | 2026-08-01 |
 
 ### Project skills (`.agents/skills/`)
 
 | Skill | Origin type | Source | Latest verified |
 |---|---|---|---|
 | **65535** | local | - | 2026-07-30 |
-| **agently-mail** | npm package wrapper | `@tencent-qqmail/agently-cli`; skill via `npx skills add https://agent.qq.com --skill -g -y` | 2026-07-29 |
+| **agently-mail** | npm package wrapper | `@tencent-qqmail/agently-cli`; skill via `npx skills add https://agent.qq.com --skill -g -y` | 2026-08-07 (CLI 1.0.14) |
+| **brainstorming** | skills.sh ecosystem | `obra/superpowers@brainstorming` | 2026-08-01 |
 | **bundle-size-optimization** | GitHub | `aj-geddes/useful-ai-prompts@bundle-size-optimization` | 2026-07-29 |
 | **deploy-to-vercel** | skills.sh ecosystem | `vercel-labs/agent-skills@deploy-to-vercel` | 2026-07-29 |
 | **design-md** | GitHub | `google-labs-code/stitch-skills@design-md` | 2026-07-29 |
-| **find-skills** | skills.sh ecosystem | `vercel-labs/skills@find-skills` | 2026-07-23 |
+| **dispatching-parallel-agents** | skills.sh ecosystem | `obra/superpowers@dispatching-parallel-agents` | 2026-08-01 |
+| **executing-plans** | skills.sh ecosystem | `obra/superpowers@executing-plans` | 2026-08-01 |
+| **find-skills** | skills.sh ecosystem | `vercel-labs/skills@find-skills` | 2026-08-07 |
+| **finishing-a-development-branch** | skills.sh ecosystem | `obra/superpowers@finishing-a-development-branch` | 2026-08-01 |
 | **framer-motion-animator** | GitHub | `patricio0312rev/skills@framer-motion-animator` | 2026-07-29 |
 | **frontend-design** | GitHub | `anthropics/skills@frontend-design` | 2026-07-29 |
 | **gc-minimal-zine-poster** | GitHub | `LiamGvchi/gc-minimal-zine-poster` | 2026-07-29 |
-| **grill-me** | GitHub | `mattpocock/skills@grill-me` | 2026-07-29 |
+| **grill-me** | GitHub | `mattpocock/skills@grill-me` | 2026-08-07 |
+| **humanizer-zh** | skills.sh ecosystem | `op7418/humanizer-zh@humanizer-zh` | 2026-08-01 |
 | **ian-xiaohei-illustrations** | GitHub | `helloianneo/ian-xiaohei-illustrations` | 2026-07-23 |
-| **kami** | GitHub (plugin) | `tw93/Kami` -> `plugins/kami/skills/kami/` | 2026-07-29 (v1.11.0) |
-| **lieflat-charts** | GitHub | `larashero3-dotcom/lieflat-charts` | 2026-07-29 |
+| **kami** | GitHub (plugin) | `tw93/Kami` -> `plugins/kami/skills/kami/` | 2026-08-07 (v1.12.0) |
+| **lieflat-charts** | GitHub | `larashero3-dotcom/lieflat-charts` | 2026-08-07 |
 | **react-performance-optimization** | GitHub | `nickcrew/claude-ctx-plugin@react-performance-optimization` | 2026-07-29 |
+| **receiving-code-review** | skills.sh ecosystem | `obra/superpowers@receiving-code-review` | 2026-08-01 |
+| **requesting-code-review** | skills.sh ecosystem | `obra/superpowers@requesting-code-review` | 2026-08-01 |
 | **signal-geometry** | GitHub | `CaliCastle/skills` | 2026-07-24 |
+| **subagent-driven-development** | skills.sh ecosystem | `obra/superpowers@subagent-driven-development` | 2026-08-01 |
+| **systematic-debugging** | skills.sh ecosystem | `obra/superpowers@systematic-debugging` | 2026-08-01 |
 | **tailwind-css-patterns** | GitHub | `giuseppe-trisciuoglio/developer-kit@tailwind-css-patterns` | 2026-07-29 |
+| **test-driven-development** | skills.sh ecosystem | `obra/superpowers@test-driven-development` | 2026-08-01 |
+| **using-git-worktrees** | skills.sh ecosystem | `obra/superpowers@using-git-worktrees` | 2026-08-01 |
+| **using-superpowers** | skills.sh ecosystem | `obra/superpowers@using-superpowers` | 2026-08-01 |
 | **vercel-react-best-practices** | skills.sh ecosystem | `vercel-labs/agent-skills@vercel-react-best-practices` | 2026-07-29 |
 | **vercel-react-view-transitions** | skills.sh ecosystem | `vercel-labs/agent-skills@vercel-react-view-transitions` | 2026-07-29 |
+| **verification-before-completion** | skills.sh ecosystem | `obra/superpowers@verification-before-completion` | 2026-08-01 |
 | **web-design-guidelines** | skills.sh ecosystem | `vercel-labs/agent-skills@web-design-guidelines` | 2026-07-29 |
-| **writing-great-skills** | GitHub | `mattpocock/skills@writing-great-skills` | 2026-07-29 |
+| **writing-for-agents** | GitHub | `mattpocock/skills@writing-for-agents`（上游已删除 writing-great-skills，改名演进为此技能） | 2026-08-07 |
+| **writing-plans** | skills.sh ecosystem | `obra/superpowers@writing-plans` | 2026-08-01 |
+| **writing-skills** | skills.sh ecosystem | `obra/superpowers@writing-skills` | 2026-08-01 |

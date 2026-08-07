@@ -13,6 +13,18 @@ All skill entities live here; every other location is a junction.
 
 **Windows rule**: `cmd //c "mklink /J …"`, never `ln -s` (copies directories on Windows).
 
+**Git Bash pitfalls (learned 2026-08-07, cost 3 failed attempts)**:
+
+1. **Pass mklink as ONE quoted string**: `cmd //c "mklink /J $link $target"`. Separate-argument form (`cmd //c mklink /J "$link" "$target"`) breaks — MSYS2 path conversion mangles `/J` into a filesystem path → `Invalid switch`.
+2. **Backslash directly before `$` kills bash variable expansion**: `".agents\\skills\\$s"` passes a literal `$s` to cmd (creates a junk `skills$s` junction). Never interpolate a variable right after a backslash. Build paths first with forward slashes, convert via `cygpath -w`, store in a variable, then interpolate:
+   ```bash
+   link=$(cygpath -w "$PWD/.agents/skills/$s")
+   target=$(cygpath -w "/c/Users/17445/Desktop/HwFee-skills/.agents/skills/$s")
+   cmd //c "mklink /J $link $target"
+   ```
+3. **`mklink /J` does not verify the target exists** — it happily creates junctions to nonexistent paths. Always verify after each batch: `ls <link>/SKILL.md` for every junction.
+4. **Junctions must stay out of git** — add `.agents/` to the target project's `.gitignore` before committing anything (git would otherwise enumerate junction contents as real files).
+
 ## Determine context
 
 Check `pwd` to know which role you play:
@@ -22,7 +34,7 @@ Check `pwd` to know which role you play:
 
 ## Install a skill
 
-Ask the user: **global** or **project**.
+**默认安装为项目级**（`$REPO/.agents/skills/<skill>/`）。只有用户明确要求"安装成全局"时才装到全局；全局技能的体系由用户自己管理，用户需要全局时会主动提醒，不要默认询问 global/project。
 
 ### Fetch
 
